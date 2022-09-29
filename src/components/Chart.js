@@ -2,16 +2,12 @@ import React, {useEffect, useState} from 'react'
 import { Line } from 'react-chartjs-2'
 import axios from 'axios'
 
-
 const Chart = (props) => {
   const {
-    setShowYearlyData,
     firstCurrency,
     secondCurrency,
     year
   } = props
-  // setYearlyData(getYearlyData)
-  // console.log(getYearlyData)
   const [newData, setNewData] = useState([])
   const [errorMessage, setErrorMessage] = useState('')
   const [showErrorMessage, setShowErrorMessage] = useState(false)
@@ -39,10 +35,8 @@ const Chart = (props) => {
   useEffect(() => {
     yearlyRequest().then((data) => {
       console.log(data)
-      // setYearlyData(data)
       if(data.success){
         setNewData(data.newArray)
-        setShowYearlyData(true)
       }
       else{
         setErrorMessage('Difficulty in fetching....')
@@ -67,14 +61,7 @@ const Chart = (props) => {
             {
               label: 'Trend',
               data: newData,
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-              ],
+              backgroundColor: 'rgba(255,150,203,0.9)',
               borderColor: [
                 'rgba(255, 99, 132, 1)',
                 'rgba(54, 162, 235, 1)',

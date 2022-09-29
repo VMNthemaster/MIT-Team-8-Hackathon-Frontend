@@ -3,6 +3,7 @@ import Chart from './Chart'
 import useState from 'react-usestateref'
 import HalfYearChart from './HalfYearChart'
 import QuarterlyChart from './QuarterlyChart'
+import MonthlyChart from './MonthlyChart'
 
 const ShowCharts = () => {
   const [currency, setCurrency] = useState({
@@ -12,12 +13,10 @@ const ShowCharts = () => {
   console.log(currency)
   const [duration, setDuration] = useState('M')
   console.log(duration)
-  const [yearlyData, setYearlyData, getYearlyData] = useState({})
   const [showYearlyData, setShowYearlyData] = useState(false)
-  const [halfYearlyData, setHalfYearlyData] = useState({})
   const [showHalfYearlyData, setShowHalfYearlyData] = useState(false)
-  const [quarterYearlyData, setQuarterYearlyData] = useState({})
   const [showQuarterYearlyData, setShowQuarterYearlyData] = useState(false)
+  const [showMonthlyData, setShowMonthlyData] = useState(false)
 
   const [year, setYear] = useState(2022)
   console.log(year)
@@ -32,12 +31,6 @@ const ShowCharts = () => {
 
   const handleYearChange = (e) => {
     setYear(e.target.value)
-  }
-
-  const handleSubmit = (duration) => {
-    console.log('clicked')
-    if (duration === 'Y') {
-    }
   }
 
   return (
@@ -468,47 +461,59 @@ const ShowCharts = () => {
           </select>
         </div>
       </div>
-      <div className="graph flex flex-col gap-y-[3vh]">
+      <div className="graph flex flex-col gap-y-[3vh] mt-[2vh]">
         <div className="flex duration-buttons gap-x-[3vw]">
           <div
             onClick={() => setDuration('W')}
-            className="weekly border-2 border-black rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
+            className="weekly border-2 bg-red-400 rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
           >
-            <h2 className="">W</h2>
-          </div>
-          <div
-            onClick={() => setDuration('M')}
-            className="monthly border-2 border-black rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
-          >
-            <h2 className="">M</h2>
-          </div>
-          <div
-            onClick={() => setDuration('Q')}
-            className="quarterly border-2 border-black rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
-          >
-            <h2 className="">Q</h2>
+            <h2 className="text-white">W</h2>
           </div>
           <div
             onClick={() => {
               setShowYearlyData(false)
-              setShowHalfYearlyData(true)
-              setDuration('H')
-              handleSubmit('Y')
+              setShowHalfYearlyData(false)
+              setShowQuarterYearlyData(false)
+              setShowMonthlyData(true)
             }}
-            className="half-yearly border-2 border-black rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
+            className="monthly border-2 bg-red-400 rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
           >
-            <h2 className="">H</h2>
+            <h2 className="text-white">M</h2>
           </div>
           <div
             onClick={() => {
+              setShowMonthlyData(false)
+              setShowYearlyData(false)
+              setShowHalfYearlyData(false)
+              setShowQuarterYearlyData(true)
+            }}
+            className="quarterly border-2 bg-red-400 rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
+          >
+            <h2 className="text-white">Q</h2>
+          </div>
+          <div
+            onClick={() => {
+              setShowMonthlyData(false)
+              setShowQuarterYearlyData(false)
+              setShowYearlyData(false)
+              setShowHalfYearlyData(true)
+              setDuration('H')
+            }}
+            className="half-yearly border-2 bg-red-400 rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
+          >
+            <h2 className="text-white">H</h2>
+          </div>
+          <div
+            onClick={() => {
+              setShowMonthlyData(false)
+              setShowQuarterYearlyData(false)
               setShowHalfYearlyData(false)
               setShowYearlyData(true)
               setDuration('Y')
-              handleSubmit('Y')
             }}
-            className="yearly border-2 border-black rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
+            className="yearly border-2 bg-red-400 rounded-md px-[1vw] py-[0.5vh] cursor-pointer"
           >
-            <h2 className="">Y</h2>
+            <h2 className="text-white">Y</h2>
           </div>
           <div className="year">
             <select
@@ -555,44 +560,40 @@ const ShowCharts = () => {
         </div>
 
         
-          {/* <div>
+          {showYearlyData && <div>
             <Chart
-              yearlyData={yearlyData}
-              setYearlyData={setYearlyData}
-              getYearlyData={getYearlyData.current}
-              showYearlyData={showYearlyData}
               setShowYearlyData={setShowYearlyData}
               firstCurrency={currency.firstCurrency}
               secondCurrency={currency.secondCurrency}
               year={year}
             />
-          </div> */}
+          </div>}
         
 
         
-          {/* <div className="halfYearlyChart">
+          {showHalfYearlyData && <div className="halfYearlyChart">
             <HalfYearChart
-              halfYearlyData={halfYearlyData}
-              setHalfYearlyData={setHalfYearlyData}
-              showHalfYearlyData={showHalfYearlyData}
-              setShowHalfYearlyData={setShowHalfYearlyData}
               firstCurrency={currency.firstCurrency}
               secondCurrency={currency.secondCurrency}
               year={year}
             />
-          </div> */}
+          </div>}
 
-          <div className="halfYearlyChart">
+          {showQuarterYearlyData && <div className="quarterYearlyChart">
             <QuarterlyChart
-              quarterYearlyData={quarterYearlyData}
-              setQuarterYearlyData={setQuarterYearlyData}
-              showQuarterYearlyData={showQuarterYearlyData}
-              setShowQuarterYearlyData={setShowQuarterYearlyData}
               firstCurrency={currency.firstCurrency}
               secondCurrency={currency.secondCurrency}
               year={year}
             />
-          </div>
+          </div>}
+
+          {showMonthlyData && <div className="monthlyChart">
+            <MonthlyChart
+              firstCurrency={currency.firstCurrency}
+              secondCurrency={currency.secondCurrency}
+              year={year}
+            />
+          </div>}
         
       </div>
     </div>

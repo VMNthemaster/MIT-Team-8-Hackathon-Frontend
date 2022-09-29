@@ -2,19 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import axios from 'axios'
 
-const HalfYearChart = (props) => {
-  const {
-    firstCurrency,
-    secondCurrency,
-    year,
-  } = props
+const MonthlyChart = (props) => {
+  const { firstCurrency, secondCurrency, year } = props
 
   const [newData, setNewData] = useState([])
   const [errorMessage, setErrorMessage] = useState('')
   const [showErrorMessage, setShowErrorMessage] = useState(false)
 
-  const halfYearlyRequest = async () => {
-    const url = `http://localhost:5000/api/${year}/halfYearlyData`
+  const monthlyRequest = async () => {
+    const url = `http://localhost:5000/api/${year}/monthlyData`
     const res = await axios
       .post(url, {
         firstCurrency: firstCurrency,
@@ -33,7 +29,7 @@ const HalfYearChart = (props) => {
   }
 
   useEffect(() => {
-    halfYearlyRequest().then((data) => {
+    monthlyRequest().then((data) => {
       console.log(data)
       if(data.success){
         setNewData(data.newArray)
@@ -54,20 +50,13 @@ const HalfYearChart = (props) => {
       {errorMessage && showErrorMessage && <h2>{errorMessage}</h2>}
       <Line
         data={{
-          labels: ['Jan', 'Jun', 'Dec'],
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
           datasets: [
             {
               label: 'Trend',
               data: newData,
-              backgroundColor: 'rgba(255,255,0,0.6)',
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-              ],
+              backgroundColor: 'rgba(255, 99, 132, 0.7)',
+              borderColor: 'orange',
               borderWidth: 1,
             },
           ],
@@ -96,4 +85,4 @@ const HalfYearChart = (props) => {
   )
 }
 
-export default HalfYearChart
+export default MonthlyChart
