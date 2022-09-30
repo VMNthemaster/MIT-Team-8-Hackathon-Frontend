@@ -559,42 +559,46 @@ const ShowCharts = () => {
           </div>
         </div>
 
-        
-          {showYearlyData && <div>
+        {showYearlyData && (
+          <div>
             <Chart
               setShowYearlyData={setShowYearlyData}
               firstCurrency={currency.firstCurrency}
               secondCurrency={currency.secondCurrency}
               year={year}
             />
-          </div>}
-        
+          </div>
+        )}
 
-        
-          {showHalfYearlyData && <div className="halfYearlyChart">
+        {showHalfYearlyData && (
+          <div className="halfYearlyChart">
             <HalfYearChart
               firstCurrency={currency.firstCurrency}
               secondCurrency={currency.secondCurrency}
               year={year}
             />
-          </div>}
+          </div>
+        )}
 
-          {showQuarterYearlyData && <div className="quarterYearlyChart">
+        {showQuarterYearlyData && (
+          <div className="quarterYearlyChart">
             <QuarterlyChart
               firstCurrency={currency.firstCurrency}
               secondCurrency={currency.secondCurrency}
               year={year}
             />
-          </div>}
+          </div>
+        )}
 
-          {showMonthlyData && <div className="monthlyChart">
+        {showMonthlyData && (
+          <div className="monthlyChart">
             <MonthlyChart
               firstCurrency={currency.firstCurrency}
               secondCurrency={currency.secondCurrency}
               year={year}
             />
-          </div>}
-        
+          </div>
+        )}
       </div>
     </div>
   )
